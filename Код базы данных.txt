@@ -1,0 +1,43 @@
+CREATE TABLE Вклад (
+    ВкладID INT PRIMARY KEY,
+    Наименование_вклада VARCHAR(255),
+    Срок_хранения INT,
+    Ставка_годовых DECIMAL(5,2),
+    Мин_сумма_вложения INT,
+    Макс_сумма_вложения INT,
+    Мин_сумма_накопления INT,
+    Макс_сумма_накопления INT
+);
+CREATE TABLE Клиенты (
+    КлиентID INT PRIMARY KEY,
+    Имя VARCHAR(255),
+    Фамилия VARCHAR(255),
+    Адрес VARCHAR(255),
+    Телефон VARCHAR(15)
+);
+CREATE TABLE Банковские_Операции (
+    ОперацияID INT PRIMARY KEY,
+    Вид_операции VARCHAR(255),
+    Дата_операции DATE,
+    Сумма INT,
+    КлиентID INT,
+    FOREIGN KEY (КлиентID) REFERENCES Клиенты(КлиентID),
+    ВкладID INT,
+    FOREIGN KEY (ВкладID) REFERENCES Вклад(ВкладID)
+);
+
+CREATE TABLE Льготы (
+    ЛьготаID INT PRIMARY KEY,
+    Вид_льготы VARCHAR(255),
+    Описание TEXT
+);
+CREATE TABLE Транзакции (
+    ТранзакцияID INT PRIMARY KEY,
+    Тип_транзакции VARCHAR(255),
+    Дата_транзакции DATE,
+    Сумма INT,
+    Отправитель_ВкладID INT,
+    FOREIGN KEY (Отправитель_ВкладID) REFERENCES Вклад(ВкладID),
+    Получатель_ВкладID INT,
+    FOREIGN KEY (Получатель_ВкладID) REFERENCES Вклад(ВкладID)
+);
